@@ -1,0 +1,79 @@
+<meta charset="UTF-8">
+<h3>Mate o vírus!</h3>
+
+<button>Clique para terminar</button>
+
+<canvas id="meuCanvas" width = "500" height = "500"></canvas>
+
+<script>
+    var canvas = document.getElementById('meuCanvas');
+    var pincel = canvas.getContext('2d');
+    var x = 0;
+    var y = 0;
+    var base = 500;
+    var altura = 500;
+    var covidX = 0;
+    var covidY = 0;
+    var pontos = 0;
+
+    function desenhaRetangulo(x,y,base,altura,corP,corL){
+        //desenha um retângulo na posição x,y; tamanho base x altura; preechido com corP e contorno corL
+        pincel.fillStyle = corP;
+        pincel.fillRect(x, y, base, altura);
+        pincel.strokeStyle = corL;
+        pincel.strokeRect(x, y, base, altura);
+    }
+
+    
+	/*  Evento setInterval(): A função que você passar como primeiro parâmetro é executada repetidamente
+    em não menos que um número determinado de milissegundos dado no segundo parâmetro, 
+    */
+
+    function apareceCovid(){
+        covidX = Math.round(Math.random()*500);
+        covidY = Math.round(Math.random()*500);
+       pincel.fillStyle = 'green';
+       pincel.beginPath();
+       pincel.arc(covidX, covidY, 10, 0, 2 * 3.14);
+       pincel.fill();
+        pincel.drawImage(covid, covidX, covidY);
+        console.log('covid: ' + covidX + ',' + covidY);
+    }
+
+    function mataCovid(evento) {
+        var x = evento.pageX - canvas.offsetLeft;
+        var y = evento.pageY - canvas.offsetTop;
+        pincel.fillStyle = 'blue';
+        pincel.beginPath();
+        pincel.arc(x, y, 10, 0, 2 * 3.14);
+        pincel.fill();
+    }
+
+    function fim(){
+        alert('Fim!');
+        clearInterval(myInterval);
+    }
+
+// desenha os limites do canvas
+desenhaRetangulo(x,y,base,altura,'white', 'black');
+
+// cria a imagem covid19 e faz o download do servidor
+var covid = new Image();
+    covid.src = 'covid19.png';
+    var largLogo = 20;
+    var altLogo = 20;
+
+apareceCovid();
+// executa a função apareceCovid a cada 2 segundos
+const myInterval = setInterval(apareceCovid, 2000);
+
+// a variável botao recebe o objeto de formulário button, do HTML
+var botao = document.querySelector("button");
+// o método onclick recebe o código da função verifica()
+// sempre que o botão for clicado, o código desta função será executado
+
+botao.onclick = fim;
+
+canvas.onclick = mataCovid;
+
+</script>
