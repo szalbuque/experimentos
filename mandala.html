@@ -1,0 +1,62 @@
+<meta charset = "UTF-8">
+<h1>Mandalas</h1>
+<canvas width="1000" height="1000"></canvas>
+
+<script>
+
+    function desenhaCirculo(x, y, raio, corP, corL) {
+
+        pincel.fillStyle = corP;
+        pincel.beginPath();
+        pincel.arc(x, y, raio, 0, 2 * Math.PI);
+        pincel.fill();
+        pincel.strokeStyle= corL;
+        pincel.stroke();
+
+    }
+
+    function desenhaMandala (x0,y0,tamanho,corP,corL){
+        var x1 = x0-(tamanho/2);
+        var y1 = (y0-tamanho);
+        var x2 = x0+(tamanho/2);
+        var y2 = y0-tamanho;
+        var x3 = x0 - (tamanho/2);
+        var y3 = y0+tamanho;
+        var x4 = x0 + (tamanho/2);
+        var y4 = y0+tamanho;
+        var x5 = x0 - tamanho;
+        var y5 = y0;
+        var x6 = x0 + tamanho;
+        var y6 = y0;    
+        desenhaCirculo (x1,y1,tamanho,corAtual,corL);
+        desenhaCirculo (x2,y2,tamanho,corAtual,corL);
+        desenhaCirculo (x3,y3,tamanho,corAtual,corL);
+        desenhaCirculo (x4,y4,tamanho,corAtual,corL);
+        desenhaCirculo (x5,y5,tamanho,corAtual,corL);
+        desenhaCirculo (x6,y6,tamanho,corAtual,corL);
+    }
+
+    var tela = document.querySelector('canvas');
+    var pincel = tela.getContext('2d');
+    var x0 = 300;
+    var y0 = 300;
+    var tamanho = 20;
+    var red = 192;
+    var green = 249;
+    var blue = 110;
+    var transp = 0.5;
+    var corAtual = 'rgba('+red+','+green+','+blue+','+transp+')';
+    console.log(corAtual);
+    
+    for (i=0; i<=3; i++) {
+        desenhaMandala(x0,y0,(tamanho*(2*i)),corAtual,'blue');    
+        red = red+10;
+        green = green+10;
+        blue = blue+10;
+        transp = transp - 0.1;
+        corAtual = 'rgba('+red+','+green+','+blue+','+transp+')';
+    }
+    
+
+    
+</script>
